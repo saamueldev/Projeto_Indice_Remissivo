@@ -1,20 +1,19 @@
 package ListaEncadeada;
 
-import java.util.NoSuchElementException;
+public class ListaEncadeada<T> {
 
-public class ListaEncadeada {
-    private static class Nodo {
-        public int elemento;
-        public Nodo proximo;
+    private static class Nodo<T> {
+        public T elemento;
+        public Nodo<T> proximo;
 
-        public Nodo(int elemento) {
+        public Nodo(T elemento) {
             this.elemento = elemento;
             this.proximo = null;
         }
     }
 
-    private Nodo primeiro;
-    private Nodo ultimo;
+    private Nodo<T> primeiro;
+    private Nodo<T> ultimo;
     private int n_elementos;
 
     public ListaEncadeada() {
@@ -23,32 +22,9 @@ public class ListaEncadeada {
         this.n_elementos = 0;
     }
 
-    public void insereInicio(int elemento) {
-        Nodo novoNodo = new Nodo(elemento);
-        if (primeiro == null) {
-            primeiro = novoNodo;
-            ultimo = novoNodo;
-        } else {
-            novoNodo.proximo = primeiro;
-            primeiro = novoNodo;
-        }
-        n_elementos++;
-    }
-
-    public void removeInicio() {
-        if (primeiro == null) {
-            throw new NoSuchElementException("A lista está vazia");
-        } else {
-            primeiro = primeiro.proximo;
-            n_elementos--;
-            if (n_elementos == 0) {
-                ultimo = null;
-            }
-        }
-    }
-
-    public void insereFinal(int elemento) {
-        Nodo novoNodo = new Nodo(elemento);
+    // Método usado para adicionar a ocorrência na classe Palavra
+    public void insereFinal(T elemento) {
+        Nodo<T> novoNodo = new Nodo<>(elemento);
         if (ultimo == null) {
             primeiro = novoNodo;
             ultimo = novoNodo;
@@ -59,71 +35,29 @@ public class ListaEncadeada {
         n_elementos++;
     }
 
-    public void removeFinal() {
-        if (ultimo == null) {
-            throw new NoSuchElementException("A lista está vazia");
-        } else {
-            if (primeiro == ultimo) {
-                primeiro = null;
-                ultimo = null;
-            } else {
-                Nodo atual = primeiro;
-                while (atual.proximo != ultimo) {
-                    atual = atual.proximo;
-                }
-                atual.proximo = null;
-                ultimo = atual;
-            }
-            n_elementos--;
-        }
-    }
-
-    public void inserePosicao(int elemento, int posicao) {
-        if (posicao < 0 || posicao > n_elementos) {
-            throw new IndexOutOfBoundsException("Posição inválida");
-        }
-
-        if (posicao == 0) {
-            insereInicio(elemento);
-        } else if (posicao == n_elementos) {
-            insereFinal(elemento);
-        } else {
-            Nodo novoNodo = new Nodo(elemento);
-            Nodo atual = primeiro;
-            for (int i = 0; i < posicao - 1; i++) {
-                atual = atual.proximo;
-            }
-            novoNodo.proximo = atual.proximo;
-            atual.proximo = novoNodo;
-            n_elementos++;
-        }
-    }
-
-    public void removePosicao(int posicao) {
-        if (posicao < 0 || posicao >= n_elementos) {
-            throw new IndexOutOfBoundsException("Posição inválida");
-        }
-        if (posicao == 0) {
-            removeInicio();
-        } else if (posicao == n_elementos - 1) {
-            removeFinal();
-        } else {
-            Nodo atual = primeiro;
-            for (int i = 0; i < posicao - 1; i++) {
-                atual = atual.proximo;
-            }
-            atual.proximo = atual.proximo.proximo;
-            n_elementos--;
-        }
-    }
-
-    public void imprimirLista() {
-        Nodo atual = primeiro;
-        System.out.print("Lista: ");
+    // Método usado para evitar duplicatas de linha na classe Palavra
+    public boolean contem(T elemento) {
+        Nodo<T> atual = primeiro;
         while (atual != null) {
-            System.out.print(atual.elemento + " ");
+            if (atual.elemento.equals(elemento)) return true;
             atual = atual.proximo;
         }
-        System.out.println();
+        return false;
+    }
+
+    /**
+     * Retorna a lista de ocorrências separadas por espaço (Ex: "4 5 6")
+     */
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        Nodo<T> atual = primeiro;
+        while (atual != null) {
+            sb.append(atual.elemento);
+            // Adiciona um ESPAÇO se não for o último elemento.
+            if (atual.proximo != null) sb.append(" ");
+            atual = atual.proximo;
+        }
+        return sb.toString();
     }
 }
