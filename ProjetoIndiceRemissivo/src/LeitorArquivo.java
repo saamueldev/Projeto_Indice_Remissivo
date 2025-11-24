@@ -17,7 +17,7 @@ public class LeitorArquivo {
         // Cria a tabela hash com 26 posições (A–Z)
         TabelaHash tabela = new TabelaHash(26);
 
-        System.out.println("Digite o caminho do arquivo com o texto: ");
+        System.out.println("Digite o caminho do arquivo com o texto a ser esquadrinhado: ");
         String caminhoTexto = sc.nextLine();
 
         // --- 1. LER E PROCESSAR O TEXTO E PREENCHER A ESTRUTURA ---
@@ -40,18 +40,18 @@ public class LeitorArquivo {
                     if (!palavra.isBlank()) {
 
                         // --- INÍCIO DO TRATAMENTO DE PLURAL SIMPLES ---
-                        String plural = palavra;
+                        String palavraCanonica = palavra;
 
                         // Verifica se a palavra tem mais de 1 caractere e termina com 's'
-                        if (plural.length() > 1 && plural.endsWith("s")) {
+                        if (palavraCanonica.length() > 1 && palavraCanonica.endsWith("s")) {
                             // Remove o 's' final para obter a forma singular.
                             // Ex: "tecnologicos" -> "tecnologico"
-                            plural = plural.substring(0, plural.length() - 1);
+                            palavraCanonica = palavraCanonica.substring(0, palavraCanonica.length() - 1);
                         }
                         // --- FIM DO TRATAMENTO DE PLURAL SIMPLES ---
 
                         // O termo canônico (singular) é quem será inserido e buscará sua linha.
-                        tabela.inserirOuAtualizar(plural, numeroLinha);
+                        tabela.inserirOuAtualizar(palavraCanonica, numeroLinha);
                     }
                 }
 
@@ -76,7 +76,7 @@ public class LeitorArquivo {
 
         try (BufferedReader br = new BufferedReader(new FileReader(caminhoChaves));
              // Inicializa o escritor para o arquivo de saída
-            PrintWriter pw = new PrintWriter(new FileWriter(caminhoSaida))) {
+             PrintWriter pw = new PrintWriter(new FileWriter(caminhoSaida))) {
 
             String linha;
             pw.println("=== ÍNDICE REMISSIVO GERADO ===");
@@ -86,14 +86,15 @@ public class LeitorArquivo {
                 String chave = linha.trim().toLowerCase();
 
                 if (!chave.isBlank()) {
+
                     // A CHAVE DE BUSCA TAMBÉM DEVE SER NORMALIZADA PARA O SINGULAR
-                    String pluralChave = chave;
-                    if (pluralChave.length() > 1 && pluralChave.endsWith("s")) {
-                        pluralChave = pluralChave.substring(0, pluralChave.length() - 1);
+                    String chaveCanonico = chave;
+                    if (chaveCanonico.length() > 1 && chaveCanonico.endsWith("s")) {
+                        chaveCanonico = chaveCanonico.substring(0, chaveCanonico.length() - 1);
                     }
 
                     // Busca a palavra na estrutura Hash -> ABB usando o termo singularizado
-                    Palavra palavraEncontrada = tabela.buscar(pluralChave);
+                    Palavra palavraEncontrada = tabela.buscar(chaveCanonico);
 
                     if (palavraEncontrada != null) {
                         // Usa o toString() da Palavra (Ex: and 4 5 6)

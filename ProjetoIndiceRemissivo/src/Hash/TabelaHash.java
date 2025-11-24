@@ -2,7 +2,7 @@ package Hash;
 
 import ArvoreBinaria.ArvoreBinariaBusca;
 import ListaEncadeada.Palavra;
-import java.text.Normalizer; 
+import java.text.Normalizer; // *** IMPORTAÇÃO NECESSÁRIA ***
 
 public class TabelaHash {
 
