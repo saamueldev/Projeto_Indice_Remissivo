@@ -42,10 +42,10 @@ public class ArvoreBinariaBusca {
             return new Nodo(palavra);
         }
 
-        int cmp = palavra.compareTo(atual.elemento);
-        if (cmp < 0) {
+        int comparar = palavra.compareTo(atual.elemento);
+        if (comparar < 0) {
             atual.esquerdo = inserirRecursivo(atual.esquerdo, palavra);
-        } else if (cmp > 0) {
+        } else if (comparar > 0) {
             atual.direito = inserirRecursivo(atual.direito, palavra);
         } else {
             // Se a palavra já existir, não insere nova — só retorna o mesmo nó
@@ -62,9 +62,9 @@ public class ArvoreBinariaBusca {
     private Palavra buscarRecursivo(Nodo atual, String texto) {
         if (atual == null) return null;
 
-        int cmp = texto.compareTo(atual.elemento.getTexto());
-        if (cmp == 0) return atual.elemento;
-        else if (cmp < 0) return buscarRecursivo(atual.esquerdo, texto);
+        int comparar = texto.compareTo(atual.elemento.getTexto());
+        if (comparar == 0) return atual.elemento;
+        else if (comparar < 0) return buscarRecursivo(atual.esquerdo, texto);
         else return buscarRecursivo(atual.direito, texto);
     }
 
