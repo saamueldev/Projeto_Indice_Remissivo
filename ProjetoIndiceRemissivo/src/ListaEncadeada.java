@@ -1,5 +1,3 @@
-package ListaEncadeada;
-
 public class ListaEncadeada<T> {
 
     private static class Nodo<T> {
@@ -22,7 +20,6 @@ public class ListaEncadeada<T> {
         this.n_elementos = 0;
     }
 
-    // Método usado para adicionar a ocorrência na classe Palavra
     public void insereFinal(T elemento) {
         Nodo<T> novoNodo = new Nodo<>(elemento);
         if (ultimo == null) {
@@ -35,7 +32,6 @@ public class ListaEncadeada<T> {
         n_elementos++;
     }
 
-    // Método usado para evitar duplicatas de linha na classe Palavra
     public boolean contem(T elemento) {
         Nodo<T> atual = primeiro;
         while (atual != null) {
@@ -45,16 +41,12 @@ public class ListaEncadeada<T> {
         return false;
     }
 
-    /**
-     * Retorna a lista de ocorrências separadas por espaço (Ex: "4 5 6")
-     */
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         Nodo<T> atual = primeiro;
         while (atual != null) {
             sb.append(atual.elemento);
-            // Adiciona um ESPAÇO se não for o último elemento.
             if (atual.proximo != null) sb.append(" ");
             atual = atual.proximo;
         }

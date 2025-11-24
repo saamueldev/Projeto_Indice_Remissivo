@@ -1,10 +1,6 @@
-package ArvoreBinaria;
-
-import ListaEncadeada.Palavra;
-
 public class ArvoreBinariaBusca {
 
-    // ---------- CLASSE NODO ----------
+
     class Nodo {
         public Palavra elemento;
         public Nodo esquerdo;
@@ -17,11 +13,11 @@ public class ArvoreBinariaBusca {
         }
     }
 
-    // ---------- ATRIBUTOS ----------
+
     private Nodo raiz;
     private int nElementos;
 
-    // ---------- CONSTRUTOR ----------
+
     public ArvoreBinariaBusca() {
         this.raiz = null;
         this.nElementos = 0;
@@ -31,7 +27,7 @@ public class ArvoreBinariaBusca {
         return raiz == null;
     }
 
-    // ---------- INSERÇÃO ORDENADA ----------
+
     public void inserir(Palavra palavra) {
         raiz = inserirRecursivo(raiz, palavra);
     }
@@ -48,13 +44,12 @@ public class ArvoreBinariaBusca {
         } else if (cmp > 0) {
             atual.direito = inserirRecursivo(atual.direito, palavra);
         } else {
-            // Se a palavra já existir, não insere nova — só retorna o mesmo nó
             return atual;
         }
         return atual;
     }
 
-    // ---------- BUSCA ----------
+
     public Palavra buscar(String texto) {
         return buscarRecursivo(raiz, texto.toLowerCase());
     }
@@ -68,7 +63,7 @@ public class ArvoreBinariaBusca {
         else return buscarRecursivo(atual.direito, texto);
     }
 
-    // ---------- PERCURSO EM ORDEM ----------
+
     public void imprimirEmOrdem() {
         imprimirEmOrdemRec(raiz);
     }
@@ -80,7 +75,7 @@ public class ArvoreBinariaBusca {
         imprimirEmOrdemRec(nodo.direito);
     }
 
-    // ---------- CONTAGEM ----------
+
     public int tamanho() {
         return nElementos;
     }
