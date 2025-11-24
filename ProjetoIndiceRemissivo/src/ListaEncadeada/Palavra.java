@@ -29,8 +29,8 @@ public class Palavra implements Comparable<Palavra> {
 
     // Usado pela ABB para ordenação alfabética
     @Override
-    public int compareA(Palavra outra) {
-        return this.texto.compareA(outra.texto);
+    public int compareTo(Palavra outra) {
+        return this.texto.compareTo(outra.texto);
     }
 
     /**
